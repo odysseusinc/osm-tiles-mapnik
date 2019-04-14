@@ -64,6 +64,8 @@ RUN mkdir -p /src && \
     make install-mod_tile && \
     ldconfig
 
+RUN a2enmod headers && service apache2 restart
+
 # The guide says to reload apache twice
 # https://switch2osm.org/manually-building-a-tile-server-16-04-2-lts/
 # RUN a2enconf mod_tile && \

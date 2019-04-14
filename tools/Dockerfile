@@ -9,14 +9,17 @@ RUN apt-get update -qq && \
       git \
       lsb-release \
       mapnik-utils \
-      nodejs-legacy \
-      npm \
+      curl \
       osm2pgsql \
       wget \
     && rm -rf /var/lib/apt/lists/*
 
+# Set up recent NodeJS
+RUN curl -L --insecure https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get install -y nodejs
+
 # Set up the psql 10 client
-RUN wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key add -
+RUN wget -q --no-check-certificate https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update -qq && \
